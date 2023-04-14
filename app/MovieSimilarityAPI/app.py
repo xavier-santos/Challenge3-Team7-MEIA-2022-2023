@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, request
+from flask_cors import CORS
 from description_similarity_service import DescriptionSimilarityService
 from category_predictor_service import CategoryPredictorService
 from PyMovieDb import IMDB
@@ -8,6 +9,7 @@ app = Flask(__name__)
 movie_service = DescriptionSimilarityService()
 category_predictor = CategoryPredictorService()
 imdb = IMDB()
+CORS(app)
 
 @app.route('/movies/top-five', methods=['POST'])
 def get_top_five_movies():
@@ -20,10 +22,11 @@ def get_top_five_movies():
         try:
             movie_response = {
                 "name": movie_imdb["name"],
-                "date published": movie_imdb["datePublished"],
+                "date_published": movie_imdb["datePublished"],
                 "description": movie_imdb["description"],
                 "poster_url": movie_imdb["poster"],
-                "imdb_url": movie_imdb["url"]
+                "imdb_url": movie_imdb["url"],
+                "genre": movie_imdb["genre"],
             }
             response.append(movie_response)
         except:
