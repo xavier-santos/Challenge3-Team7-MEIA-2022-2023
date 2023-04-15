@@ -37,3 +37,10 @@ class DescriptionSimilarityService:
         ranked_movies = self.movies_df.sort_values('similarity', ascending=False)
         top_five_movies = ranked_movies.head(5)
         return top_five_movies['Name'].tolist()
+    
+    def get_description(self, movie_name):
+        row = self.movies_df.loc[self.df['movie_title'] == movie_name]
+        if len(row) == 0:
+            return None
+        else:
+            return row.iloc[0]['description']

@@ -25,9 +25,9 @@ def get_top_five_movies():
         movie_imdb = json.loads(imdb.get_by_name(movie.strip()))
         try:
             movie_response = {
-                "name": movie_imdb["name"],
+                "name": movie.strip(),
                 "date_published": movie_imdb["datePublished"],
-                "description": movie_imdb["description"],
+                "description": movie_service.get_description(movie.strip()),
                 "poster_url": movie_imdb["poster"],
                 "imdb_url": movie_imdb["url"],
                 "genre": movie_imdb["genre"],
