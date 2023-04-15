@@ -16,6 +16,10 @@ def get_top_five_movies():
     user_data = request.get_json()
     user_input = user_data['description']
     top_five_movies = movie_service.get_top_five_movies(user_input)
+    # Get model predictions for input text using the CategoryPredictorService
+    predictions = category_predictor.predict(user_input)
+    # Extract top predicted genres from dictionary of predictions
+    top_genres = [genre for genre, prob in predictions.items() if prob >= 0.5]
     response = []
     for movie in top_five_movies:
         movie_imdb = json.loads(imdb.get_by_name(movie.strip()))
@@ -31,7 +35,8 @@ def get_top_five_movies():
             response.append(movie_response)
         except:
             pass
-    return jsonify({'movies': response})
+    return jsonify({'movies': response,
+        "genres": top_genres})
 
 @app.route('/movies/predictgenre', methods=['POST'])
 def predict():
