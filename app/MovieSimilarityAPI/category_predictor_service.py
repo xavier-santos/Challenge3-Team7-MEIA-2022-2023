@@ -5,7 +5,7 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.models import load_model
 
 class CategoryPredictorService:
-    def __init__(self, model_path='LSTM_Basic', max_len=200):
+    def __init__(self, model_path='RNN', max_len=39):
         self.model = load_model(model_path)
         self.tokenizer = Tokenizer()
         self.max_len = max_len
