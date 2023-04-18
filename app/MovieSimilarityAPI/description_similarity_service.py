@@ -14,7 +14,7 @@ nltk.download('stopwords')
 class DescriptionSimilarityService:
     def __init__(self):
         # Load movie data from CSV file
-        self.movies_df = pd.read_csv('all.csv')
+        self.movies_df = pd.read_csv('similarity_model_dataset.csv')
         self.rake = Rake()
         # Create a bag-of-words representation for each movie description
         self.vectorizer = TfidfVectorizer()
@@ -39,8 +39,9 @@ class DescriptionSimilarityService:
         return top_five_movies['Name'].tolist()
     
     def get_description(self, movie_name):
-        row = self.movies_df.loc[self.df['movie_title'] == movie_name]
+        row = self.movies_df.loc[self.movies_df['Name'] == movie_name]
+        print(row)
         if len(row) == 0:
             return None
         else:
-            return row.iloc[0]['description']
+            return row.iloc[0]['Description']

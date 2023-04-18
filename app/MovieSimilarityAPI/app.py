@@ -21,6 +21,7 @@ def get_top_five_movies():
     # Extract top predicted genres from dictionary of predictions
     top_genres = [genre for genre, prob in predictions.items() if prob >= 0.5]
     response = []
+    print(predictions)
     for movie in top_five_movies:
         movie_imdb = json.loads(imdb.get_by_name(movie.strip()))
         try:
